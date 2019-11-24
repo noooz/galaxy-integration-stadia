@@ -1,0 +1,11 @@
+{
+    "name": "Stadia plugin",
+    "platform": "stadia",
+    "guid": "65756450-4637-4ca6-8add-04b33782d8c0",
+    "version": "0.1",
+    "description": "Stadia plugin",
+    "author": "noooz",
+    "email": "noooz@github.com",
+    "url": "https://github.com/noooz/galaxy-integration-stadia",
+    "script": "plugin.py"
+}
