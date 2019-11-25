@@ -2,14 +2,15 @@ import logging
 import sys
 import re
 import requests
-import xml.etree.ElementTree as ET
 from galaxy.api.plugin import Plugin, create_and_run_plugin
 from galaxy.api.consts import Platform
 from galaxy.api.types import Authentication, NextStep, Game, LicenseType, LicenseInfo
 from galaxy.api.errors import AuthenticationRequired, InvalidCredentials
 
+logging.getLogger().setLevel(logging.ERROR)
+
 logger = logging.getLogger('stadia')
-logger.setLevel(logging.DEBUG)
+logger.setLevel(logging.INFO)
 logger.info('start stadia plugin (test)')
 
 class StadiaPlugin(Plugin):
@@ -55,12 +56,15 @@ class StadiaPlugin(Plugin):
         return self.create_user()
 
     def create_user(self):
-        r = self.request_url('https://www.google.com/')
+        # r = self.request_url('https://www.google.com/')
+        # m = re.search('<div class="gb_ib gb_jb">(.*?)</div><div class="gb_kb">(.*?)</div>', r.text)
 
+        r = self.request_url('https://stadia.google.com/home')
+        m = re.search('<span class="VY8blf fSorq">(.*?)</span>.*<div class="gI3hkd">(.*?)</div>', r.text)
+        
         with open('C:\\Users\\mail\\temp\\stadia-user.html', 'wb') as f:
             f.write(r.content)
 
-        m = re.search('<div class="gb_ib gb_jb">(.*?)</div><div class="gb_kb">(.*?)</div>', r.text)
         if m:
             user = m[1]
             user_id = m[2]
