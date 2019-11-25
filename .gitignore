@@ -1,0 +1,14 @@
+__pycache__
+bin
+
+aiohttp*
+async_timeout*
+attr*
+certifi*
+chardet*
+galaxy*
+idna*
+multidict*
+requests*
+urllib3*
+yarl*
