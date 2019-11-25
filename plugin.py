@@ -31,18 +31,15 @@ class StadiaPlugin(Plugin):
                 return self.create_user()
             except:
                 logger.info('relogin')
-                pass
 
         return NextStep("web_session", {
-                    "window_title": "Anmelden – Google Konten",
-                    "window_width": 560,
-                    "window_height": 610,
-                    "start_uri": "https://accounts.google.com/SignOutOptions?continue=https%3A%2F%2Fstadia.google.com%2F",
-                    "end_uri_regex": "^" + re.escape("https://stadia.google.com/home")
-                })
+                "window_title": "Anmelden – Google Konten",
+                "window_width": 560,
+                "window_height": 610,
+                "start_uri": "https://accounts.google.com/SignOutOptions?continue=https%3A%2F%2Fstadia.google.com%2F",
+                "end_uri_regex": "^" + re.escape("https://stadia.google.com/home")
+            })
      
-        
-
     async def pass_login_credentials(self, step, credentials, cookies):
         logger.info('pass_login_credentials')
         auth_cookies = {
@@ -58,9 +55,6 @@ class StadiaPlugin(Plugin):
         return self.create_user()
 
     def create_user(self):
-        # r = self.request_url('https://www.google.com/')
-        # m = re.search('<div class="gb_ib gb_jb">(.*?)</div><div class="gb_kb">(.*?)</div>', r.text)
-
         r = self.request_url('https://stadia.google.com/home')
         m = re.search('<span class="VY8blf fSorq">(.*?)</span>.*<div class="gI3hkd">(.*?)</div>', r.text)
         
@@ -88,7 +82,6 @@ class StadiaPlugin(Plugin):
             raise AuthenticationRequired()
 
         return r
-
 
     async def get_owned_games(self):
         logging.debug('getting owned games')
