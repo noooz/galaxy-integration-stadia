@@ -1,5 +1,7 @@
 import logging
 import sys
+import os
+import pathlib
 import re
 import requests
 from galaxy.api.plugin import Plugin, create_and_run_plugin
@@ -62,8 +64,8 @@ class StadiaPlugin(Plugin):
         r = self.request_url('https://stadia.google.com/home')
         m = re.search('<span class="VY8blf fSorq">(.*?)</span>.*<div class="gI3hkd">(.*?)</div>', r.text)
         
-        with open('C:\\Users\\mail\\temp\\stadia-user.html', 'wb') as f:
-            f.write(r.content)
+        # with open(os.sep.join([str(pathlib.Path.home()), 'stadio-user.html']), 'wb') as f:
+        #     f.write(r.content)
 
         if m:
             user = m[1]
@@ -95,8 +97,8 @@ class StadiaPlugin(Plugin):
 
         r = self.request_url('https://stadia.google.com/home')
 
-        with open('C:\\Users\\mail\\temp\\stadia-home.html', 'wb') as f:
-            f.write(r.content)
+        # with open(os.sep.join([str(pathlib.Path.home()), 'stadio-home.html']), 'wb') as f:
+        #     f.write(r.content)
 
         games = [m[1] for m in re.finditer('class="GqLi4d QAAyWd qu6XL"[^>]*aria-label="(.*?)"', r.text)]
         games = [re.sub(' ansehen.$', '', g) for g in games]
