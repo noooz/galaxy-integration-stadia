@@ -96,14 +96,15 @@ class StadiaPlugin(Plugin):
         games = [m[1] for m in re.finditer('class="GqLi4d QAAyWd qu6XL"[^>]*aria-label="(.*?)"', r.text)]
         games = [re.sub(' ansehen.$', '', g) for g in games]
         
+
+
+        games = [Game(g, g, [], LicenseInfo(LicenseType.OtherUserLicense)) for g in games]
+        
         last_played_game = [m[1] for m in re.finditer('class="Rt8Z2e qRvogc QAAyWd" aria-label="(.*?)"', r.text)]
         last_played_game[0] = last_played_game[0].split(' Spielen')[0]
         games.append(Game(last_played_game[0], last_played_game, [], LicenseInfo(LicenseType.OtherUserLicense)))
         
-
         logger.info('games: %s' % games)
-
-        games = [Game(g, g, [], LicenseInfo(LicenseType.OtherUserLicense)) for g in games]
 
         return games
 
