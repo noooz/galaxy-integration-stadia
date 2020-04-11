@@ -93,19 +93,19 @@ class StadiaPlugin(Plugin):
         # with open(os.sep.join([str(pathlib.Path.home()), 'stadio-home.html']), 'wb') as f:
         #     f.write(r.content)
 
+        # add games in "library"
         games = [m[1] for m in re.finditer('class="GqLi4d QAAyWd qu6XL"[^>]*aria-label="(.*?)"', r.text)]
         games = [re.sub(' ansehen.$', '', g) for g in games]
         
-
+        # add last played game
+        m = re.search('class="Rt8Z2e qRvogc QAAyWd" aria-label="(.*?) Spielen"', r.text)
+        if m:
+            games.append(m[1])
+            
+        logger.info('games: %s' % games)
 
         games = [Game(g, g, [], LicenseInfo(LicenseType.OtherUserLicense)) for g in games]
         
-        last_played_game = [m[1] for m in re.finditer('class="Rt8Z2e qRvogc QAAyWd" aria-label="(.*?)"', r.text)]
-        last_played_game[0] = last_played_game[0].split(' Spielen')[0]
-        games.append(Game(last_played_game[0], last_played_game, [], LicenseInfo(LicenseType.OtherUserLicense)))
-        
-        logger.info('games: %s' % games)
-
         return games
 
 def main():
